@@ -30,10 +30,13 @@ class Song(models.Model):
 
     title = models.CharField(max_length=128)
     text = models.TextField(default='This is plain text')
-    style = models.CharField(max_length=1, choices=STYLE_CHOICES, null=True)
-    play_on = models.CharField(max_length=1, choices=INSTRUMENT_CHOICES, null=True)
+    style = models.CharField(max_length=1, choices=STYLE_CHOICES, default='P')
+    play_on = models.CharField(max_length=1, choices=INSTRUMENT_CHOICES, default='G')
     created = models.DateField(auto_now_add=True)
     # TO DO maximum dwa gantunki muzyki do wyboru
+
+    class Meta:
+        ordering = ['title']
 
     def __str__(self):
         return self.title
