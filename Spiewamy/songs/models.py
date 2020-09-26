@@ -30,9 +30,16 @@ class Song(models.Model):
 
     title = models.CharField(max_length=128)
     text = models.TextField(default='This is plain text')
+    '''
+    Zapisywac tekst piosenki tak zeby posidal biale znaki(\n, \t, \r).
+    '''
     style = models.CharField(max_length=1, choices=STYLE_CHOICES, default='P')
     play_on = models.CharField(max_length=1, choices=INSTRUMENT_CHOICES, default='G')
     created = models.DateField(auto_now_add=True)
+    '''
+    Przypisywac uzytkownika ktory dodal te piosenke. 
+    Pozwoli to na posiadanie piosenke dodanych przez uzytkownia
+    '''
     # TO DO maximum dwa gantunki muzyki do wyboru
 
     class Meta:
