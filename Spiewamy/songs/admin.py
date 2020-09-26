@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Song
+from .models import Song, SingRoom
 
 #The eaisies way to add model is
 # admin.site.register(Song)  without addotional inheritance
@@ -19,4 +19,5 @@ class SongAdmin(admin.ModelAdmin):
     '''
 
 # Register your models here.
-admin.site.register(Song, SongAdmin)
+admin.site.register(Song)
+admin.site.register(SingRoom)

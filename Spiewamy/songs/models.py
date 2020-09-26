@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
+
 class Song(models.Model):
     INSTRUMENT_GUITAR = 'G'
     INSTRUMENT_ACCORDION = 'A'
@@ -36,6 +38,7 @@ class Song(models.Model):
     style = models.CharField(max_length=1, choices=STYLE_CHOICES, default='P')
     play_on = models.CharField(max_length=1, choices=INSTRUMENT_CHOICES, default='G')
     created = models.DateField(auto_now_add=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     '''
     Przypisywac uzytkownika ktory dodal te piosenke. 
     Pozwoli to na posiadanie piosenke dodanych przez uzytkownia
@@ -43,7 +46,20 @@ class Song(models.Model):
     # TO DO maximum dwa gantunki muzyki do wyboru
 
     class Meta:
+
         ordering = ['title']
 
     def __str__(self):
         return self.title
+
+class SingRoom(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    song = models.OneToOneField(Song, null=True, on_delete=models.SET_NULL)
+
+    #user.username == song.owner.username
+
+    def __str__(self):
+        if self.song:
+            return f'{self.user.username}, {self.song.title}'
+        else:
+            return self.user.username

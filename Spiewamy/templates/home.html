@@ -1,5 +1,10 @@
 {%  extends 'base.html' %}
 
 {% block content %}
-    <p>Hello templates world</p>
+    <form method="post">
+        {% csrf_token %}
+        <label></label>
+        <input name="username" type="text" placeholder="Wpisz nazwe uzytkownika">
+        <button class="btn btn-primary" type="submit">Znajdz uzytkownia</button>
+    </form>
 {% endblock %}

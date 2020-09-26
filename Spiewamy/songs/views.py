@@ -1,12 +1,18 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import request, HttpResponse
-from .models import Song
+from .models import Song, User
 
 def home_view(request, *args, **kwargs):
-    # po wpisaniu uzytkownika przekierowanie na strone z jego piosenka
-    return HttpResponse(f'formatka do wpisania uzytkownika')
+    if request.method == 'GET':
+
+        return render(request, 'home.html')
+    elif request.method == 'POST':
+        username = request.POST['username']
+        return redirect(f'/{username}')
+
 
 def home_song_view(request, *args, **kwargs):
-    song = Song.objects.get(title='123')
+    # tutaj logika chanelsow
+    return HttpResponse('this is user webpage')
 
-    return render(request, 'home.html')
+
