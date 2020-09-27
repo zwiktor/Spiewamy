@@ -3,5 +3,5 @@ from .views import singroom_view, home_view
 
 urlpatterns = [
     path('', home_view),
-    path('<str:username>/', singroom_view),
+    path('sing/<str:username>/', singroom_view),
 ]

@@ -10,7 +10,7 @@ def home_view(request, *args, **kwargs):
         username = request.POST['username']#przypisanie danych z httprequest
         is_user = User.objects.get(username=username)
         if is_user:
-            return redirect(f'/{username}')
+            return redirect(f'/sing/{username}')
         else:
             raise Http404('Uzytkownik nie istnieje')
 
