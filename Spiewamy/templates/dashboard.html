@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+     <button class="btn btn-warning" href="#">+ Dodaj Piosenke +</button>
+    {% for song in songs %}
+        <p>{{ song.title }}
+            <button class="btn btn-primary" href="#">Szczegoly</button>
+            <button class="btn btn-danger" href="#">Usuń</button>
+        </p>
+    {% endfor %}
+
+
+
+{% endblock %}

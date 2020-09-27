@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import request, HttpResponse, Http404
+
 from .models import Song, User, SingRoom
+
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user
 
 def home_view(request, *args, **kwargs):
     if request.method == 'GET':
@@ -22,5 +26,49 @@ def singroom_view(request, username,  *args, **kwargs):
         raise Http404('Uzytkownik nie spiewa')
     song = Song.objects.get(id=songroom.song_id)
     return render(request, 'singroom.html', context={'song': song})
+
+## CRUD do obslugiwania piosenek przez uzytkownika
+
+
+@login_required(login_url='/account/login')
+def dashboard_view(request,  *args, **kwargs):
+    if request.method == 'GET':
+        username = get_user(request)
+        songs = Song.objects.filter(owner=username)
+        context = {'songs' : songs}
+    return render(request, 'dashboard.html', context)
+
+
+@login_required(login_url='/account/login')
+def view_song(request, id,  *args, **kwargs):
+    if request.method == 'GET':
+        pass
+
+
+@login_required(login_url='/account/login')
+def add_song(request, id,  *args, **kwargs):
+    if request.method == 'GET':
+        pass
+    elif request.method == 'POST':
+        pass
+
+
+@login_required(login_url='/account/login')
+def edit_song(request, id,  *args, **kwargs):
+    if request.method == 'GET':
+        pass
+    elif request.method == 'POST':
+        pass
+
+
+@login_required(login_url='/account/login')
+def remove_song(request, id,  *args, **kwargs):
+    if request.method == 'GET':
+        pass
+    elif request.method == 'POST':
+        pass
+
+
+
 
 

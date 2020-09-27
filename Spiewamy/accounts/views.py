@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import authenticate, login, logout
 from .models import User
 
-# Create your views here.
+
 def login_view(request, *args, **kwargs):
     if request.method == "GET":
         return render(request, 'login.html')
@@ -15,6 +15,7 @@ def login_view(request, *args, **kwargs):
             return redirect('/')
         else:
             return HttpResponse('Zły login i haslo')
+
 
 def register_view(request, *args, **kwargs):
     if request.method == "GET":
@@ -29,8 +30,6 @@ def register_view(request, *args, **kwargs):
             return redirect('/')
         else:
             return HttpResponse('podaj poprawne hasło')
-
-
 
 
 def logout_view(request):
