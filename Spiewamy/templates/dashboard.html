@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-     <button class="btn btn-warning" href="#">+ Dodaj Piosenke +</button>
+    <a class="btn btn-warning" href="{% url 'addSong' %}">+ Dodaj Piosenke +</a>
     {% for song in songs %}
         <p>{{ song.title }}
-            <button class="btn btn-primary" href="#">Szczegoly</button>
-            <button class="btn btn-danger" href="#">Usuń</button>
+            <a class="btn btn-primary" href="{% url 'viewSong' song.id%}">Podglad</a>
+{#                  do podania argumentów możnap odać kolejny parametr w url (django template)                                                    #}
+            <a class="btn btn-danger" href="{% url 'removeSong' song.id%}">Usun</a>
         </p>
     {% endfor %}
 
