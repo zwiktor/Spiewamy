@@ -1,6 +1,7 @@
 {%  extends 'base.html' %}
 
 {% block content %}
+    <a href="{% url 'dashboard' %}">Dashboard</a>
     <a class="btn btn-warning" href="{% url 'editSong' song.id%}">Edytuj</a>
     {{ song.title }}
     {{ song.text }}

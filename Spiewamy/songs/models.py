@@ -60,6 +60,6 @@ class SingRoom(models.Model):
 
     def __str__(self):
         if self.song:
-            return f'{self.user.username}, {self.song.title}'
+            return f'{self.song.title}'
         else:
-            return self.user.username
+            return 'Pusty pokój'

@@ -22,10 +22,10 @@ def home_view(request, *args, **kwargs):
 def singroom_view(request, username,  *args, **kwargs):
     user_id = User.objects.get(username=username).id
 
-    songroom = SingRoom.objects.get(user_id=user_id)
-    if not songroom.song:
+    singroom = SingRoom.objects.get(user_id=user_id)
+    if not singroom.song:
         raise Http404('Uzytkownik nie spiewa')
-    song = Song.objects.get(id=songroom.song_id)
+    song = Song.objects.get(id=singroom.song_id)
     return render(request, 'singroom.html', context={'song': song})
 
 ## CRUD do obslugiwania piosenek przez uzytkownika
@@ -35,9 +35,21 @@ def singroom_view(request, username,  *args, **kwargs):
 def dashboard_view(request,  *args, **kwargs):
     if request.method == 'GET':
         username = get_user(request)
+        singroom = SingRoom.objects.get(user=username)
         songs = Song.objects.filter(owner=username)
-        context = {'songs' : songs}
-    return render(request, 'dashboard.html', context)
+        context = {'songs' : songs, 'singroom': singroom}
+        return render(request, 'dashboard.html', context)
+
+
+@login_required(login_url='/account/login')
+def set_song(request, id, *args, **kwargs):
+    if request.method == 'GET':
+        user = get_user(request)
+        song = Song.objects.get(id=id)
+        singroom = SingRoom.objects.get(user=user)
+        singroom.song = song
+        singroom.save()
+        return redirect('dashboard')
 
 
 @login_required(login_url='/account/login')
