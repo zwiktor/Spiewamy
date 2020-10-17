@@ -1,9 +1,24 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
-    <p>{{ song.created }}</p>
-    <p>{{ song.title }}</p>
-    <p>{{ song.text }}</p>
+
+
+    <p id="song_title">oczekiwanie na wczytanie piosenki...</p>
+    <p id="song_text"></p>
+
+
+
+{#    how to get this song information form api/<username> - we can use fetch#}
+{#    <p>{{ song.created }}</p>#}
+{#    <p>{{ song.title }}</p>#}
+{#    <p>{{ song.text }}</p>#}
+
 
 
 {% endblock %}
+
+    {% block script %}
+        <script src="{% static 'js/singroom.js' %}"></script>
+    {% endblock %}

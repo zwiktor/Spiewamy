@@ -1,0 +1,44 @@
+body, html {
+  height: 100%;
+}
+
+.background {
+  /* The image used */
+  background-image: url("http://127.0.0.1:8000/static/img/background_pink.jpg");
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+nav {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.titleSpiewamy {
+  text-align: center;
+  font-size: 12vw;
+  font-weight: bold;
+  color: darkviolet;
+}
+
+.center-div {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+@media screen and (min-width: 601px) {
+  .center-div p {
+    font-size: 2vw;
+  }
+}
+
+/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 600px) {
+  .center-div p {
+    font-size: 4vw;
+  }
+}

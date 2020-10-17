@@ -124,10 +124,10 @@ def api_song(request, id, *args, **kwargs):
 def api_singroom(request, username, *args, **kwargs):
     if request.method == 'GET':
         user_id = User.objects.get(username=username).id
-        song_id = SingRoom.objects.get(user_id=user_id).id
+        song_id = SingRoom.objects.get(user_id=user_id).song_id
         song = Song.objects.get(id=song_id)
         serializer = SongSerializer(instance=song)
-        return JsonResponse(serializer.data)
+        return JsonResponse(serializer.data, status=200)
 
 
 
