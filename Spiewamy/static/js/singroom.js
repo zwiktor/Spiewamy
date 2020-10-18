@@ -8,7 +8,7 @@ function startSing () {
     const song_text = document.getElementById('song_text')
 
     setInterval(function () {
-    fetch(api_url )
+    fetch(api_url)
         .then(response => response.json())
         .then(data => {
             song_title.textContent = data.title

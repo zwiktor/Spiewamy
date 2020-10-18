@@ -19,6 +19,11 @@ nav {
     background-color: rgba(255, 255, 255, 0.9);
 }
 
+nav .user_text {
+  font-weight: bold;
+}
+
+
 .titleSpiewamy {
   text-align: center;
   font-size: 12vw;

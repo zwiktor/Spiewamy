@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import singroom_view, home_view, dashboard_view, view_song, edit_song, remove_song, add_song, set_song, api_song, api_singroom
+from .views import singroom_view, home_view, dashboard_view, view_song, edit_song, remove_song, add_song, set_song, api_song, api_singroom, api_users
 
 urlpatterns = [
     path('', home_view, name='home'),
@@ -14,4 +14,5 @@ urlpatterns = [
 
     path('api/song/<int:id>', api_song, name='apiSong'),
     path('api/<str:username>', api_singroom, name='apiSingroom'),
+    path('api/all/users', api_users, name='apiUsers'),
 ]

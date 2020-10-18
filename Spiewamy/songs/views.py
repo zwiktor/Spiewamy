@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
-from django.http import request, HttpResponse, Http404, JsonResponse
+from django.http import request, HttpResponse, Http404
 
-from .serializers import SongSerializer
+from .serializers import SongSerializer, UserSerializer
 from .forms import CreateSongForm
 from .models import Song, User, SingRoom
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user
@@ -21,15 +24,16 @@ def home_view(request, *args, **kwargs):
             raise Http404('Uzytkownik nie istnieje')
 
 def singroom_view(request, username,  *args, **kwargs):
-    user_id = User.objects.get(username=username).id
 
+    user = User.objects.get(username=username)
+    user_id = user.id
     singroom = SingRoom.objects.get(user_id=user_id)
     if not singroom.song:
         raise Http404('Uzytkownik nie spiewa')
     song = Song.objects.get(id=singroom.song_id)
     return render(request, 'singroom.html', context={'song': song})
 
-## CRUD do obslugiwania piosenek przez uzytkownika
+
 
 
 @login_required(login_url='/account/login')
@@ -113,21 +117,27 @@ def remove_song(request, id,  *args, **kwargs):
         return redirect('dashboard')
 
 
+@api_view(['GET'])
 def api_song(request, id, *args, **kwargs):
     if request.method == 'GET':
         song = Song.objects.get(id=id)
         serializer = SongSerializer(instance=song)
-        return JsonResponse(serializer.data)
+        return Response(serializer.data)
 
 
-
+@api_view(['GET'])
 def api_singroom(request, username, *args, **kwargs):
     if request.method == 'GET':
         user_id = User.objects.get(username=username).id
         song_id = SingRoom.objects.get(user_id=user_id).song_id
         song = Song.objects.get(id=song_id)
         serializer = SongSerializer(instance=song)
-        return JsonResponse(serializer.data, status=200)
+        return Response(serializer.data, status=200)
 
 
-
+@api_view(['GET'])
+def api_users(request, *args, **kwargs):
+    if request.method == 'GET':
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data, status=200)
