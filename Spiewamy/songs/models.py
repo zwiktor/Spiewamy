@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-
+from django.db.models.signals import post_save, pre_save
 
 User = get_user_model()
 
@@ -57,10 +57,20 @@ class SingRoom(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     song = models.OneToOneField(Song, null=True, on_delete=models.SET_NULL)
 
-    #user.username == song.owner.username
 
     def __str__(self):
         if self.song:
             return f'{self.song.title}'
         else:
             return 'Pusty pokój'
+
+
+def add_first_sing_to_user(sender, instance, created, **kwargs):
+    if created:
+        user = instance
+        song = Song.objects.create(title='new song', text='horible tekst song', owner=user)
+        song.save()
+        singroom = SingRoom.objects.create(user_id=user.id, song_id=song.id)
+        singroom.save()
+
+post_save.connect(add_first_sing_to_user, sender=User)

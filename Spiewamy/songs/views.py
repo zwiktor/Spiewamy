@@ -17,15 +17,16 @@ def home_view(request, *args, **kwargs):
 
     elif request.method == 'POST':
         username = request.POST['username']#przypisanie danych z httprequest
-        is_user = User.objects.get(username=username)
-        if is_user:
+        user = User.objects.filter(username=username)
+        if user:
             return redirect(f'/sing/{username}')
         else:
             raise Http404('Uzytkownik nie istnieje')
 
 def singroom_view(request, username,  *args, **kwargs):
-
     user = User.objects.get(username=username)
+    if not user:
+        raise Http404('Niema Uzytkownika')
     user_id = user.id
     singroom = SingRoom.objects.get(user_id=user_id)
     if not singroom.song:
@@ -128,10 +129,14 @@ def api_song(request, id, *args, **kwargs):
 @api_view(['GET'])
 def api_singroom(request, username, *args, **kwargs):
     if request.method == 'GET':
-        user_id = User.objects.get(username=username).id
-        song_id = SingRoom.objects.get(user_id=user_id).song_id
+        user = User.objects.get(username=username)
+        if user.singroom.song:
+            song_id = user.singroom.song.id
+        else:
+            return Response({'id': '-1'}, status=200)
         song = Song.objects.get(id=song_id)
         serializer = SongSerializer(instance=song)
+        print(serializer.data)
         return Response(serializer.data, status=200)
 
 
