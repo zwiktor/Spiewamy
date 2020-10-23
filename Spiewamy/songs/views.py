@@ -136,7 +136,6 @@ def api_singroom(request, username, *args, **kwargs):
             return Response({'id': '-1'}, status=200)
         song = Song.objects.get(id=song_id)
         serializer = SongSerializer(instance=song)
-        print(serializer.data)
         return Response(serializer.data, status=200)
 
 
