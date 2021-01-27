@@ -1,6 +1,7 @@
 var url = window.location.pathname.split('/')
-var user_url = url[2]
-var api_url = "http://192.168.0.17:8000/api/" + user_url
+const user_url = url[2]
+var api_url = "http://127.0.0.1:8000/api/" + user_url
+var btn_link = document.getElementById('link-songs')
 
 function startSing () {
 
@@ -11,6 +12,7 @@ function startSing () {
     fetch(api_url)
         .then(response => response.json())
         .then(data => {
+            console.log(data.text)
             song_title.textContent = data.title
             converted_text = converter_to_beautiful_text(data.text)
             //Tutaj trzeba zastosować funkcję edycji tekstu i wprowadzenie do diva we właściwym formacie
@@ -43,8 +45,6 @@ function increaseFontSize() {
     fontSize = parseInt(fontSize)
     var newFontSize = fontSize + 1
     song_text.style.fontSize = '' + newFontSize + 'px'
-
-
 }
 
 function decreaseFontSize() {
@@ -54,5 +54,9 @@ function decreaseFontSize() {
     fontSize = parseInt(fontSize)
     var newFontSize = fontSize - 1
     song_text.style.fontSize = '' + newFontSize + 'px'
-
 }
+
+btn_link.addEventListener("click", () => {
+    var urlUserSongs = "http://127.0.0.1:8000/sing/" + user_url + "/songs"
+    window.location.replace(urlUserSongs);
+})

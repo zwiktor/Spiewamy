@@ -14,7 +14,7 @@ def login_view(request, *args, **kwargs):
             login(request, user)
             return redirect('/')
         else:
-            return HttpResponse('Zły login i haslo')
+            return HttpResponse('Zły login lub hasło')
 
 
 def register_view(request, *args, **kwargs):

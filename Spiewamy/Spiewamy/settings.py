@@ -26,7 +26,7 @@ SECRET_KEY = 'kdr4c6%l2$4w=sfg1^e&*1ks@*v@#hvu=-l*d-0ir=-%2^mu_x'
 DEBUG = True
 
 # inet 192.168.0.17/24 brd 192.168.0.255
-ALLOWED_HOSTS = ['0.0.0.0', '192.168.0.17/24', '192.168.0.17', '192.168.0.255', '127.0.0.1']
+ALLOWED_HOSTS = []
 
 
 # Application definition

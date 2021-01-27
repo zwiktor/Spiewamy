@@ -4,30 +4,38 @@
 
 {% block content %}
 
+    <div class="container-fluid font-resizer">
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-success resizer-opacity" onclick="increaseFontSize()">
+                    +
+                </button>
+                <span>Wielkosc czcionki</span>
+                <button class="btn btn-danger resizer-opacity" onclick="decreaseFontSize()">
+                    -
+                </button>
+            </div>
 
-
+        </div>
+    </div>
 
     <div class="container-fluid">
         <div class="row">
             <div class="col text-to-sing">
-                <p id="song_title">oczekiwanie na wczytanie piosenki...</p>
+                <p class="text-center pt-2" id="song_title">oczekiwanie na wczytanie piosenki...</p>
 
-                <div id="song_text" class="song-text text-justify">
+                <div id="song_text" class="song-text text-justify pb-4">
 
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                <button id="link-songs" type="button" class="btn btn-secondary btn-block">Co teraz chcesz zaśpiewać?</button>
+            </div>
+        </div>
     </div>
 
-    <div class="clearfix topcorner">
-        <button class="btn btn-success" onclick="increaseFontSize()">
-            +
-        </button>
-        <span>Wielkosc czcionki</span>
-        <button class="btn btn-danger" onclick="decreaseFontSize()">
-            -
-        </button>
-    </div>
 
 {% endblock %}
 

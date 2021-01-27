@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+{#  dodanie filtra do segregacji piosenek  #}
+{#  możliwość wpisania propozycji piosenki  #}
+<div class="container user-songs">
+     {% for song in songs %}
+    <div class="row border">
+        <div class="col-6 m-auto p-auto">
+            <p class="m-auto p-auto text-center">{{ song.title }}</p>
+        </div>
+        <div class="col-6">
+            <button type="button" class="btn btn-warning btn-block">Zaspiewamy?</button>
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+{#<ul class="list-group">#}
+{#    {% for song in songs %}#}
+{#        <li class="list-group-item col-6">{{ song.title }}</li><button class="btn btn-success col-4">guzik</button>#}
+{#    {% endfor %}#}
+{#</ul>#}
+
+
+
+
+{% endblock %}
+
+

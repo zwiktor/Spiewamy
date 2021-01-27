@@ -34,8 +34,12 @@ def singroom_view(request, username,  *args, **kwargs):
     song = Song.objects.get(id=singroom.song_id)
     return render(request, 'singroom.html', context={'song': song})
 
-
-
+def user_songs(request, username,  *args, **kwargs):
+    if request.method == 'GET':
+        user = User.objects.get(username=username)
+        songs = Song.objects.filter(owner=user)
+        context = {'songs': songs}
+        return render(request, 'userSongs.html', context=context)
 
 @login_required(login_url='/account/login')
 def dashboard_view(request,  *args, **kwargs):
@@ -77,7 +81,8 @@ def add_song(request,  *args, **kwargs):
         form = CreateSongForm(request.POST) # tworzy instancje formularza z przesłanymi danymi
         if form.is_valid():# sprawdza czy formularz zgadza się z forms.py -> models.py
             title = form.cleaned_data['title'] # to wyciąga czyste dane z inputa
-            text = form.cleaned_data['text']
+            text = form.cleaned_data['text'].replace(' ', '&nbsp;')
+            print(text)
             style = form.cleaned_data['style']
             play_on= form.cleaned_data['play_on']
             user = get_user(request)
@@ -136,6 +141,15 @@ def api_singroom(request, username, *args, **kwargs):
             return Response({'id': '-1'}, status=200)
         song = Song.objects.get(id=song_id)
         serializer = SongSerializer(instance=song)
+        return Response(serializer.data, status=200)
+
+
+@api_view(['GET'])
+def api_user_songs(request, username, *args, **kwargs):
+    if request.method == 'GET':
+        user = User.objects.get(username=username)
+        songs = Song.objects.filter(owner=user)
+        serializer = SongSerializer(songs, many=True)
         return Response(serializer.data, status=200)
 
 
