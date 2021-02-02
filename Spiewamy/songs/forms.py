@@ -6,4 +6,3 @@ class CreateSongForm(ModelForm):
     class Meta:
         model = Song
         exclude = ['owner']
-

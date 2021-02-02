@@ -1,18 +1,34 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <a href="{% url 'home' %}">Strona Domowa</a>
-    <p>Atualnie Spiewasz - {{ singroom }}</p>
-    <a class="btn btn-warning" href="{% url 'addSong' %}">+ Dodaj Piosenke +</a>
+    <a class="btn btn-primary" href="{% url 'home' %}">Strona Domowa</a>
+    <div class="row mt-3 mb-2">
+        <div class="col-12">
+            <a class="btn btn-warning d-block" href="{% url 'addSong' %}">+ Dodaj Piosenke +</a>
+        </div>
+    </div>
+    <div class="row dashboard-bg mt-1 mb-4">
+        <div class="col-10 m-auto">
+            <h6 class="text-center">Aktualnie Spiewasz <h2 class="text-center">{{ singroom }}</h2></h6>
+        </div>
+    </div>
+
+
     {% for song in songs %}
-        <p>{{ song.title }}
-            <a class="btn btn-success" href="{% url 'setSong' song.id%}">Spiewaj</a>
-            <a class="btn btn-primary" href="{% url 'viewSong' song.id%}">Podglad</a>
-{#                  do podania argumentów możnap odać kolejny parametr w url (django template)                                                    #}
-            <a class="btn btn-danger" href="{% url 'removeSong' song.id%}">Usun</a>
-        </p>
+        <div class="container dashboard-bg mb-3">
+            <div class="row">
+                <div class="col-10 m-auto">
+                    <h4 class="text-center">{{ song.title }}</h4>
+                </div>
+            </div>
+            <div class="row">
+                <a class="btn btn-success" href="{% url 'setSong' song.id%}">Spiewaj</a>
+                <a class="btn btn-primary" href="{% url 'viewSong' song.id%}">Podglad</a>
+                <a class="btn btn-danger" href="{% url 'removeSong' song.id%}">Usun</a>
+            </div>
+        </div>
     {% endfor %}
 
 
 
-{% endblock %}s
+{% endblock %}

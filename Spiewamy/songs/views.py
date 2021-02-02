@@ -82,7 +82,7 @@ def add_song(request,  *args, **kwargs):
         if form.is_valid():# sprawdza czy formularz zgadza się z forms.py -> models.py
             title = form.cleaned_data['title'] # to wyciąga czyste dane z inputa
             text = form.cleaned_data['text'].replace(' ', '&nbsp;')
-            print(text)
+            text = text.replace('\r\n', '<br>')
             style = form.cleaned_data['style']
             play_on= form.cleaned_data['play_on']
             user = get_user(request)
@@ -95,14 +95,16 @@ def add_song(request,  *args, **kwargs):
 def edit_song(request, id,  *args, **kwargs):
     if request.method == 'GET':
         song = Song.objects.get(id=id)
-        form = CreateSongForm(instance=song)# mozna uzywac instance do podkladnia danych z modeli
+        form = CreateSongForm(instance=song)
+        # form.cleaned_data['text'].replace('<br>', '\r\n').replace('&nbsp;', ' ')
         context = {'form': form}
         return render(request, 'editSong.html', context)
     elif request.method == 'POST':
         form = CreateSongForm(request.POST)  # tworzy instancje formularza z przesłanymi danymi
         if form.is_valid():  # sprawdza czy formularz zgadza się z forms.py -> models.py
             title = form.cleaned_data['title']  # to wyciąga czyste dane z inputa
-            text = form.cleaned_data['text']
+            text = form.cleaned_data['text'].replace('\r\n', '<br>')
+            text = text.replace('\s', '&nbsp;')
             style = form.cleaned_data['style']
             play_on = form.cleaned_data['play_on']
             # user = get_user(request) to raczej w edycji nie jest potrzebne

@@ -14,10 +14,9 @@ function startSing () {
         .then(data => {
             console.log(data.text)
             song_title.textContent = data.title
-            converted_text = converter_to_beautiful_text(data.text)
             //Tutaj trzeba zastosować funkcję edycji tekstu i wprowadzenie do diva we właściwym formacie
 
-            song_text.innerHTML = converted_text
+            song_text.innerHTML = data.text
         }).catch(function (error) {
             console.log(error)
     })
@@ -60,3 +59,9 @@ btn_link.addEventListener("click", () => {
     var urlUserSongs = "http://127.0.0.1:8000/sing/" + user_url + "/songs"
     window.location.replace(urlUserSongs);
 })
+
+function sentToSingroom(user_url) {
+    var urlUser = "http://127.0.0.1:8000/sing/" + (user_url)
+    console.log(urlUser)
+    window.location.replace(urlUser);
+}

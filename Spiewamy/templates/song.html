@@ -1,11 +1,24 @@
 {%  extends 'base.html' %}
+{% load static %}
 
 {% block content %}
     <a href="{% url 'dashboard' %}">Dashboard</a>
     <a class="btn btn-warning" href="{% url 'editSong' song.id%}">Edytuj</a>
-    {{ song.title }}
-    {{ song.text }}
-    {{ song.style }}
-    {{ song.play_on }}
-
+    <a type="button" class="btn btn-light" onclick="convertToBetterText()">Formatuj</a>
+    <p>{{ song.style }}</p>
+    <p>{{ song.play_on }}</p>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col text-to-sing">
+                <p class="text-center pt-2" id="song_title">{{ song.title }}</p>
+                <div id="song_text_dashboard" class="song-text text-justify pb-4">
+                    {{ song.text }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
+
+    {% block script %}
+        <script src="{% static 'js/base.js' %}"></script>
+    {% endblock %}

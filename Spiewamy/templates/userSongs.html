@@ -12,7 +12,7 @@
             <p class="m-auto p-auto text-center">{{ song.title }}</p>
         </div>
         <div class="col-6">
-            <button type="button" class="btn btn-warning btn-block">Zaspiewamy?</button>
+            <a type="button" class="btn btn-warning btn-block" onclick="sentToSingroom('{{ song.owner }}')">Zaspiewamy?</a>
         </div>
 
     </div>
@@ -29,4 +29,7 @@
 
 {% endblock %}
 
+{% block script %}
+    <script src="{% static 'js/singroom.js' %}"></script>
+{% endblock %}
 

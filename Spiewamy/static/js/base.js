@@ -33,6 +33,23 @@ function checkIfUserExist() {
             console.log(error)
     })
 
+}
 
 
+function convertToBetterText() {
+    let song_text = document.getElementById('song_text_dashboard')
+    text = song_text.innerText
+    song_text.innerHTML = text
+}
+
+function convertToBetterTextForm() {
+    let song_text = document.getElementById('id_text')
+    text = song_text.value.replaceAll('<br>','&#013')
+    song_text.innerHTML = text
+    song_text2 = document.getElementById('id_text')
+    console.log(song_text2.value)
+    console.log(song_text2.innerText)
+
+    // text = song_text.value
+    // song_text.value = text
 }

@@ -1,12 +1,22 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        <p>{{ form.title }}</p>
+        <a type="button" class="btn btn-light" onclick="convertToBetterTextForm()">Formatuj TEXT</a>
+        <p id="song_text_dashboard">{{ form.text }}</p>
+        <p>{{ form.style }}</p>
+        <p>{{ form.play_on }}</p>
+
         <input type="submit" value="Zmien">
     </form>
 
 
 
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/base.js' %}"></script>
 {% endblock %}
