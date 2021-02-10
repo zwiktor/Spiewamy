@@ -3,7 +3,17 @@
 {% load static %}
 
 {% block content %}
+{% if messages %}
+<div class="alert alert-primary text-center" role="alert">
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 
+{% endif %}
     <div class="container-fluid font-resizer">
         <div class="row">
             <div class="col">

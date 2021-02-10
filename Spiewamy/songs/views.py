@@ -3,13 +3,14 @@ from django.http import request, HttpResponse, Http404
 
 from .serializers import SongSerializer, UserSerializer
 from .forms import CreateSongForm
-from .models import Song, User, SingRoom
+from .models import Song, User, SingRoom, ProposeSongs
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user
+from django.contrib import messages
 
 def home_view(request, *args, **kwargs):
     if request.method == 'GET':
@@ -38,8 +39,23 @@ def user_songs(request, username,  *args, **kwargs):
     if request.method == 'GET':
         user = User.objects.get(username=username)
         songs = Song.objects.filter(owner=user)
-        context = {'songs': songs}
+        context = {'songs': songs, 'username': user}
         return render(request, 'userSongs.html', context=context)
+
+    if request.method == 'POST':
+        new_song = request.POST.get('new_song')
+        if new_song or new_song == '':
+            user = User.objects.get(username=username)
+            PropSong = ProposeSongs.objects.create(name=new_song, user=user)
+            messages.info(request, f'Gratulacje, zaproponowałeś piosenkę {new_song}')
+            return redirect('singroom', username)
+        song_id_with_noise = request.POST.get('song')
+        song_id = song_id_with_noise.split('?')[1]
+        song = Song.objects.get(id=song_id)
+        song.votes += 1
+        song.save()
+        messages.info(request, 'Gratulacje, zaglosowales na piosenkę')
+        return redirect('singroom', username)
 
 @login_required(login_url='/account/login')
 def dashboard_view(request,  *args, **kwargs):
@@ -49,6 +65,15 @@ def dashboard_view(request,  *args, **kwargs):
         songs = Song.objects.filter(owner=username)
         context = {'songs' : songs, 'singroom': singroom}
         return render(request, 'dashboard.html', context)
+
+    if request.method == 'POST':
+        songs_for_votes = Song.objects.filter(owner=get_user(request))
+        for song in songs_for_votes:
+            print(song.votes)
+            song.votes = 0
+            song.save()
+        print('haloh alo')
+        return redirect('dashboard')
 
 
 @login_required(login_url='/account/login')
@@ -124,6 +149,14 @@ def remove_song(request, id,  *args, **kwargs):
         song.delete()
         return redirect('dashboard')
 
+
+@login_required(login_url='/account/login')
+def remove_song_votes(request, id,  *args, **kwargs):
+    if request.method == 'GET':
+        song = Song.objects.get(id=id)
+        song.votes = 0
+        song.save()
+        return redirect('dashboard')
 
 @api_view(['GET'])
 def api_song(request, id, *args, **kwargs):

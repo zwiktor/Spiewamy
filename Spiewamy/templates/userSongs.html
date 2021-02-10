@@ -6,18 +6,34 @@
 {#  dodanie filtra do segregacji piosenek  #}
 {#  możliwość wpisania propozycji piosenki  #}
 <div class="container user-songs">
-     {% for song in songs %}
-    <div class="row border">
-        <div class="col-6 m-auto p-auto">
-            <p class="m-auto p-auto text-center">{{ song.title }}</p>
-        </div>
-        <div class="col-6">
-            <a type="button" class="btn btn-warning btn-block" onclick="sentToSingroom('{{ song.owner }}')">Zaspiewamy?</a>
-        </div>
+{# {% url 'singroom' username%} #}
 
-    </div>
-    {% endfor %}
+    <form method="post" action="">
+        {% csrf_token %}
+        {% for song in songs %}
+            <div class="row border">
+                <div class="col-6 m-auto p-auto">
+                    <p class="m-auto p-auto text-center">{{ song.title }}</p>
+                </div>
+                <div class="col-6">
+                    <input class="btn btn-warning btn-block" type="submit" name="song" value="Zaspiewamy?{{ song.id }}">
+                </div>
+
+            </div>
+        {% endfor %}
+    </form>
+
 </div>
+<div class="container bg-light">
+    <form method="post" action="" class="mt-5">
+        {% csrf_token %}
+        <label>Podaj tytul piosenki</label>
+        <input type="text" name="new_song" placeholder="tytul piosenki" class="m-auto">
+
+        <input type="submit" class="btn btn-primary">
+    </form>
+</div>
+
 {#<ul class="list-group">#}
 {#    {% for song in songs %}#}
 {#        <li class="list-group-item col-6">{{ song.title }}</li><button class="btn btn-success col-4">guzik</button>#}

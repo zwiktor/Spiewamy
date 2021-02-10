@@ -59,9 +59,3 @@ btn_link.addEventListener("click", () => {
     var urlUserSongs = "http://127.0.0.1:8000/sing/" + user_url + "/songs"
     window.location.replace(urlUserSongs);
 })
-
-function sentToSingroom(user_url) {
-    var urlUser = "http://127.0.0.1:8000/sing/" + (user_url)
-    console.log(urlUser)
-    window.location.replace(urlUser);
-}

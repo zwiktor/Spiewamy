@@ -6,6 +6,11 @@
         <div class="col-12">
             <a class="btn btn-warning d-block" href="{% url 'addSong' %}">+ Dodaj Piosenke +</a>
         </div>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <input class="btn btn-danger m-2" type="submit" value="Usun wszystkie glosy">
+        </form>
+
     </div>
     <div class="row dashboard-bg mt-1 mb-4">
         <div class="col-10 m-auto">
@@ -25,6 +30,8 @@
                 <a class="btn btn-success" href="{% url 'setSong' song.id%}">Spiewaj</a>
                 <a class="btn btn-primary" href="{% url 'viewSong' song.id%}">Podglad</a>
                 <a class="btn btn-danger" href="{% url 'removeSong' song.id%}">Usun</a>
+                <a class="btn">{{ song.votes }} głosów </a>
+                <a class="btn btn-danger" href="{% url 'removeSongVotes' song.id%}">Usun głosy</a>
             </div>
         </div>
     {% endfor %}

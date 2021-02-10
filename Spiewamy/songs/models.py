@@ -5,6 +5,10 @@ from django.db.models.signals import post_save, pre_save
 User = get_user_model()
 
 
+class ProposeSongs(models.Model):
+    name = models.CharField(max_length=150, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
 
 class Song(models.Model):
     INSTRUMENT_GUITAR = 'G'
@@ -40,6 +44,7 @@ class Song(models.Model):
     play_on = models.CharField(max_length=1, choices=INSTRUMENT_CHOICES, default='G')
     created = models.DateField(auto_now_add=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    votes = models.SmallIntegerField(default=0)
     '''
     Przypisywac uzytkownika ktory dodal te piosenke. 
     Pozwoli to na posiadanie piosenke dodanych przez uzytkownia
@@ -48,7 +53,7 @@ class Song(models.Model):
 
     class Meta:
 
-        ordering = ['title']
+        ordering = ['-votes', 'title']
 
     def __str__(self):
         return self.title
