@@ -27,7 +27,7 @@ def register_view(request, *args, **kwargs):
         email = ''
         if password == password2:
             user = User.objects.create_user(username, email, password)
-            return redirect('/')
+            return redirect('login')
         else:
             return HttpResponse('podaj poprawne hasło')
 

@@ -158,6 +158,15 @@ def remove_song_votes(request, id,  *args, **kwargs):
         song.save()
         return redirect('dashboard')
 
+
+def view_song_proposition(request, *args, **kwargs):
+    if request.method == 'GET':
+        user = get_user(request)
+        prop_songs = ProposeSongs.objects.filter(user=user)
+        context = {'prop_songs': prop_songs}
+        return render(request, 'proposition.html', context=context)
+
+
 @api_view(['GET'])
 def api_song(request, id, *args, **kwargs):
     if request.method == 'GET':

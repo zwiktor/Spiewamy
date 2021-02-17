@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a class="btn btn-primary" href="{% url 'home' %}">Strona Domowa</a>
+    {% for song in prop_songs %}
+        <h3 style="background-color: whitesmoke">{{ song.name }}</h3>
+    {% endfor %}
+
+{% endblock %}

@@ -1,18 +1,8 @@
 from django.test import TestCase
 from selenium import webdriver
+from time import sleep
 
 from .models import User
-
-class StartHomrPageTest(TestCase):
-    def setUp(self):
-        self.driver = webdriver.Chrome()
-
-    def tearDown(self):
-        self.driver.quit()
-
-    def test_home_page(self):
-        self.driver.get('http://127.0.0.1:8000/')
-        self.assertIn('Spiewamy', self.driver.title)
 
 
 class UsersRegisterTest(TestCase):
